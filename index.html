@@ -548,13 +548,12 @@
 
         <!-- Popup -->
         <article class="submit-button">
-            <!-- <button class="contact-button" id="myBtn">Open</button> -->
             <div class="position-fixed contact-btn" id="myBtn">
                 <a class="d-block text-center">CONTACTEZ-MOI</a>
             </div>
 
             <div class="form-popup" id="myForm">
-              <form class="form-container" method="POST" data-email="example@email.net"
+              <form class="gform form-container" method="POST" data-email="example@email.net"
             action="https://script.google.com/macros/s/AKfycbyIS8PKudDkCgMd4zpzECVwfkL_FOZd2iG-xFDt/exec">                
                 <div class="form-elements">
                  <span class="off"><i class="far fa-times-circle text-secondary"></i></span>
@@ -601,13 +600,19 @@
                   <input type="text" placeholder="Mail ou téléphone" name="contact" required>
 
                   <label for="comment" class="mb-0 mt-2 mt-md-3 text-primary"><b>Commentaires éventuels</b></label>
-                  <input type="text" placeholder="Ecrivez-nous vos demandes particulières" name="comment" required>
+                  <input type="text" placeholder="Ecrivez-nous vos demandes particulières" name="comment">
               
                   <button id="submit-btn" type="submit" class="btn bg-secondary mt-2 mt-md-3">Envoyer votre demande</button>                  
                 </div>                
                 <div class="thankyou_message" style="display:none;">
-                  <h2>Your contact information is submitted successfully! <br>
-                    We will get back to you soon!</h2>
+                  <div class="done text-center">
+                    <i class="fas fa-check-circle"></i>
+                  </div>  
+                  <h2 class="text-center">Your contact information is submitted successfully! <br>
+                    We will get back to you soon!</h2>      
+                  <div class="text-center">
+                    <button class="btn btn-primary success_close" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Fermer</button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -621,6 +626,7 @@
         
         <!-- popup & submission article JS -->
         <script data-cfasync="false" type="text/javascript" src="js/popup-handler.js"></script>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

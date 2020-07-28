@@ -7,26 +7,17 @@ function closeForm() {
 }
 
 (function() {
-  function validEmail(email) {
-    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    return re.test(email);
-  }
-
-  function validateHuman(honeypot) {
-    if (honeypot) {  //if hidden form filled up
-      console.log("Robot Detected!");
-      return true;
-    } else {
-      console.log("Welcome Human!");
-    }
-  }
-
   // get all data in form and return object
   function getFormData(form) {
     var elements = form.elements;
+    var honeypot;
 
     var fields = Object.keys(elements).filter(function(k) {
-          return (elements[k].name !== "honeypot");
+      if (elements[k].name === "honeypot") {
+        honeypot = elements[k].value;
+        return false;
+      }
+      return true;
     }).map(function(k) {
       if(elements[k].name !== undefined) {
         return elements[k].name;
@@ -54,45 +45,39 @@ function closeForm() {
             data.push(item.value);
           }
         }
-        formData[name] = data.join(',   ');
+        formData[name] = data.join(', ');
       }
     });
 
     // add form-specific values into the data
     formData.formDataNameOrder = JSON.stringify(fields);
     formData.formGoogleSheetName = form.dataset.sheet || "responses"; // default sheet name
-    formData.formGoogleSendEmail = form.dataset.email || ""; // no email by default
+    formData.formGoogleSendEmail
+      = form.dataset.email || ""; // no email by default
 
-    console.log(formData);
-    return formData;
+    return {data: formData, honeypot: honeypot};
   }
 
   function handleFormSubmit(event) {  // handles form submit without any jquery
     event.preventDefault();           // we are submitting via xhr below
     var form = event.target;
-    var data = getFormData(form);         // get the values submitted in the form
+    var formData = getFormData(form);
+    var data = formData.data;
 
-    // OPTION: Remove this comment to enable SPAM prevention, see README.md
-    if (validateHuman(data.honeypot)) {  //if form is filled, form will not be submitted
+    // If a honeypot field is filled, assume it was done so by a spam bot.
+    if (formData.honeypot) {
       return false;
     }
-    
-    if( data.email && !validEmail(data.email) ) {   // if email is not valid show error
-      var invalidEmail = form.querySelector(".email-invalid");
-      if (invalidEmail) {
-        invalidEmail.style.display = "block";
-        return false;
-      }
-    } else {
-      disableAllButtons(form);
-      var url = form.action;
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', url);
-      // xhr.withCredentials = true;
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.onreadystatechange = function() {
-          console.log(xhr.status, xhr.statusText);
-          console.log(xhr.responseText);
+
+    disableAllButtons(form);
+    var url = form.action;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    // xhr.withCredentials = true;
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          form.reset();
           var formElements = form.querySelector(".form-elements")
           if (formElements) {
             formElements.style.display = "none"; // hide form
@@ -101,18 +86,16 @@ function closeForm() {
           if (thankYouMessage) {
             thankYouMessage.style.display = "block";
           }
-          return;
-      };
-      // url encode form data for sending as post data
-      var encoded = Object.keys(data).map(function(k) {
-          return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
-      }).join('&');
-      xhr.send(encoded);
-    }
+        }
+    };
+    // url encode form data for sending as post data
+    var encoded = Object.keys(data).map(function(k) {
+        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+    }).join('&');
+    xhr.send(encoded);
   }
   
   function loaded() {
-    console.log("Contact form submission handler loaded successfully.");
     // bind to the submit event of our form
     var forms = document.querySelectorAll("#myForm");
     for (var i = 0; i < forms.length; i++) {
@@ -122,7 +105,7 @@ function closeForm() {
   document.addEventListener("DOMContentLoaded", loaded, false);
 
   function disableAllButtons(form) {
-    var buttons = form.querySelectorAll("button");
+    var buttons = form.querySelectorAll("#submit-btn");
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].disabled = true;
     }
@@ -139,6 +122,9 @@ var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("off")[0];
 
+var successClose = document.getElementsByClassName("success_close")[0];
+
+
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
   modal.style.display = "block";
@@ -154,6 +140,10 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+}
+
+successClose.onclick = function() {
+  modal.style.display = "none";
 }
 
 // Delayed Popup
