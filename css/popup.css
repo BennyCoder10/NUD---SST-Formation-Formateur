@@ -3,16 +3,51 @@ article * {
           box-sizing: border-box;
 }
 
+#myForm {
+  -webkit-animation: popup .5s;
+          animation: popup .5s;
+}
+
+@-webkit-keyframes popup {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popup {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* The popup form - hidden by default */
+/* The Modal (background) */
 .form-popup {
   display: none;
+  /* Hidden by default */
   position: fixed;
-  top: 50%;
-  right: 50%;
+  /* Stay in place */
+  z-index: 100000;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
   border: 3px solid #f1f1f1;
-  z-index: 10000;
-  /* scroll in the po*/
   overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
 }
 
 /* Add styles to the form container */
@@ -20,6 +55,35 @@ article * {
   max-width: 800px;
   scroll-behavior: auto;
   margin: 0 auto;
+}
+
+/* Modal Content/Box */
+.form-elements {
+  background-color: #fefefe;
+  margin: 3% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: auto;
+  min-width: 300px;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.form-elements h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.form-elements > label {
+  text-align: left;
+  padding-left: 1rem;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .form-elements label {
+    padding-left: 0;
+  }
 }
 
 /* Full-width input fields */
@@ -58,94 +122,9 @@ article * {
   opacity: 0.8;
 }
 
-/* Add a red background color to the cancel button */
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
-}
-
-/* The Modal (background) */
-.form-popup {
-  display: none;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 100000;
-  /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
-  overflow: auto;
-  /* Enable scroll if needed */
-  background-color: black;
-  /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.form-elements {
-  background-color: #fefefe;
-  margin: 3% auto;
-  /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: auto;
-  min-width: 316px;
-  border-radius: 0.5rem;
-  position: relative;
-}
-
-.form-elements h1 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.form-elements > label {
-  text-align: left;
-  padding-left: 1rem;
-  text-transform: uppercase;
-}
-
-@media (max-width: 760px) {
-  .form-elements label {
-    padding-left: 0;
-  }
-}
-
-.thankyou_message {
-  background-color: #fefefe;
-  margin: 15% auto;
-  /* 15% from the top and centered */
-  border: 1px solid #1d4867;
-  width: auto;
-  min-width: 316px;
-  border-radius: 0.5rem;
-  -webkit-animation: popup .2s;
-          animation: popup .2s;
-  padding: 20px;
-}
-
-.thankyou_message .done {
-  font-size: 4rem;
-  color: #28a745;
-}
-
-.thankyou_message h2 {
-  color: #1d4867;
-  padding-bottom: 10px;
-}
-
-.thankyou_message .success_close {
-  width: auto;
-}
-
-@media (max-width: 766px) {
-  .thankyou_message h2 {
-    font-size: 1.5rem;
-  }
 }
 
 /* The Close Button */
@@ -163,7 +142,7 @@ article * {
   cursor: pointer;
 }
 
-.checkbox {
+#checkbox {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -177,39 +156,51 @@ article * {
   background: #f1f1f1;
 }
 
-.checkbox textarea {
+#checkbox textarea {
   margin-left: 15px;
 }
 
-.checkbox input {
+#checkbox input {
   width: auto;
   margin-left: 1rem;
 }
 
-.checkbox label {
+#checkbox label {
   padding-left: 0;
 }
 
-#myForm {
-  -webkit-animation: popup .5s;
-          animation: popup .5s;
+/* thank you message */
+.thankyou_message {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  border: 1px solid #1d4867;
+  width: auto;
+  min-width: 316px;
+  border-radius: 0.5rem;
+  -webkit-animation: popup .2s;
+          animation: popup .2s;
+  padding: 20px;
 }
 
-@-webkit-keyframes popup {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.thankyou_message h2 {
+  color: #1d4867;
+  padding: 2rem 0;
 }
 
-@keyframes popup {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+.thankyou_message .done_icon {
+  font-size: 4rem;
+  color: #28a745;
+}
+
+.thankyou_message .success_close {
+  width: auto;
+  padding: 12px 20px;
+}
+
+@media (max-width: 766px) {
+  .thankyou_message h2 {
+    font-size: 1.5rem;
   }
 }
 /*# sourceMappingURL=popup.css.map */

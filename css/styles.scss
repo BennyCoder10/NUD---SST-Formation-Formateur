@@ -7536,16 +7536,28 @@ form .row:first-child .floating-label-form-group {
   margin-bottom: 0.5rem; }
 
 
-.card-body hr { width: 30px; border: 1.5px solid #80808061; border-radius: 10px;}
+
+// Modification overridden
+.masthead h1 { text-shadow: 2px 2px #0d2b41;}
+
+// #portfolio .card-body { padding: 0}
+.portfolio-items { border-radius: 0.5rem; box-shadow: 3px 5PX 7px 1px var(--primary); margin: 0 10px; height: 100%;}
+
+#about .lead { font-weight: normal;}
 
 #testimonial {
   background: #f4f7fe;
   box-shadow: 0px 5px 19px -5px #6c757d5e;
-  // background: linear-gradient(to bottom, white, #1d4867);
-  .card {  border-radius: 3px; border: none; box-shadow: 3px 4px 16px -4px #6c757d5e;}
-  h4 { color: #767789;}
-  p { font-size: 1.2rem; color: rgb(56, 56, 56); font-style: italic;}
 
+  .card {  border-radius: 3px; border: none; box-shadow: 3px 4px 16px -4px #6c757d5e;
+    .card-body {    
+      h4 { color: #767789;}
+      hr { width: 30px; border: 1.5px solid #80808061; border-radius: 10px;}
+      p { font-size: 1.2rem; color: rgb(56, 56, 56); font-style: italic;}
+    }
+  }
+
+  // LinkedIn link button
   .btn_more {
     font-size: 1rem;
     padding: 0.7rem 1rem;
@@ -7556,24 +7568,11 @@ form .row:first-child .floating-label-form-group {
 
     &:hover {
       background: var(--primary);
-
       a {color: white; text-decoration: none;}
     }
   }
 }
 
-#about .lead { font-weight: normal;}
-
-
 #contact { 
-//     background: linear-gradient(to bottom, #1d4867, white 2%);
   hr { width: 40px; border: 3px solid rgba(149, 193, 31, 0.8); border-radius: 10px;}
-}
-
-.masthead h1 { text-shadow: 2px 2px #0d2b41; }
-
-
-#portfolio .card-body { padding: 0}
-
-.portfolio-items { border-radius: 0.5rem; box-shadow: 3px 5PX 7px 1px var(--primary); margin: 0 10px; height: 100%;
 }
